@@ -40,6 +40,7 @@ class network:
             if self.leaf_nodes:
                 for node in list(self.leaf_nodes):
                     if t >= node.tv:
+                        node.t = t
                         node.add_children(self, t)
             else:
                 self.terminated_early = True
@@ -77,4 +78,4 @@ class node:
             if len(network.nodes) >= network.max_nodes:
                 self.terminated_early = True
                 break
-            node(network, self, self.depth+1, self.a, self.b, self.p, t0=t)
+            node(network, self, self.depth+1, self.a, self.b, self.p, t0=1)

@@ -21,11 +21,10 @@ except:
 
 # PLOT cumulative number shared as function of p and b in params file
 
-for ib, b in enumerate(S.bs):
-    nplots = len(S.ps)
+for ip, p in enumerate(S.ps):
+    nplots = len(S.bs)
     fig = plt.figure(figsize=(6, 3 * nplots))
-    for ip, p in enumerate(S.ps):
-        print p
+    for ib, b in enumerate(S.bs):
         infnames = glob.glob(S.datadir + "network_*" + str(S.a) + "*" + str(b) + "*" + str(p) + "*.dat")[:S.nruns]
         reshareevents = np.zeros((S.nruns, S.tmax))
         cumulativere = np.zeros((S.nruns, S.tmax))
@@ -44,7 +43,7 @@ for ib, b in enumerate(S.bs):
         meancum = np.mean(cumulativere, axis=0)
         stdecum = np.std(cumulativere, axis=0)/np.sqrt(S.nruns)
  
-        ax = fig.add_subplot(nplots, 1, ip+1)
+        ax = fig.add_subplot(nplots, 1, ib+1)
         print fname, p, fname
         ax.set_title('p='+ str(p) + ' b=' + str(b))
         ax.fill_between(range(S.tmax), meancum-stdecum, meancum+stdecum, alpha=0.5)

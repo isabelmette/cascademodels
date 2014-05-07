@@ -4,15 +4,15 @@ import v1; reload(v1)
 import numpy as np
 import time
 from collections import Counter
-tmax = 50
+tmax = 100
 
 datadir = "data/"
 a = 2
 b = 3
 p = 0.6
 nruns = 100
-for run in range(nruns):
-    seed = int(time.time())
+seeds = np.loadtxt('100seeds.dat', dtype=int)
+for run, seed in enumerate(seeds):
     net = v1.network(a=2, b=3, p=0.6, seed=seed)
     net.runtime(tnow=1, tmax=tmax)
     if net.terminated_early:
@@ -20,7 +20,7 @@ for run in range(nruns):
 
     outf = open(datadir + net.outfname, 'w')
     outf.writelines("tmax=" + str(tmax) + "_terminatedEarly=" + str(net.terminated_early) + "\n" )
-    outf.writelines("u v t_v\n")
+    outf.writelines("u v r t_v\n")
 
     for node in net.nodes:
         u = node.parent

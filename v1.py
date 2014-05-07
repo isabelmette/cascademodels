@@ -28,7 +28,7 @@ class network:
         self.leaf_nodes = set()
         self.terminated_early = False # Assume false unless changed
 
-        self.max_nodes = 1000000
+        self.max_nodes = np.inf
         root = node(self, 0, 0, self.a, self.b, self.p, self.t0)
 
      
@@ -56,7 +56,6 @@ class node:
         self.p = p
         self.t0 = t0
 
-
         self.reshare = np.random.random() < self.p
         if self.reshare:
             dv = samplepowerlaw(exponent = self.a, minval=1)
@@ -73,5 +72,3 @@ class node:
                 self.terminated_early = True
                 break
             node(network, self.id, self.depth+1, self.a, self.b, self.p, t0=t)
-
-
